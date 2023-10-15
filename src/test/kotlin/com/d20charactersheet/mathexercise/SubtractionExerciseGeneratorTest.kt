@@ -13,8 +13,8 @@ class SubtractionExerciseGeneratorTest {
         val subtractionExercise = SubtractionExerciseGenerator(Random(1)).createExercise()
 
         // assert
-        assertThat(subtractionExercise.minuend).isEqualTo(965)
-        assertThat(subtractionExercise.subtrahend).isEqualTo(741)
+        assertThat(subtractionExercise.argument1).isEqualTo(965)
+        assertThat(subtractionExercise.argument2).isEqualTo(741)
         assertThat(subtractionExercise.result).isEqualTo(224)
     }
 

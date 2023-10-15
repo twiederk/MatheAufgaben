@@ -1,8 +1,12 @@
 package com.d20charactersheet.mathexercise
 
-class Lesson(args: Array<String>) {
+import kotlin.math.min
+import kotlin.random.Random
+
+class Lesson(args: Array<String> = emptyArray()) {
 
     private val maxValue: Int
+    private var score: Int = 0
 
     init {
         maxValue = readMaxValue(args)
@@ -19,43 +23,67 @@ class Lesson(args: Array<String>) {
     fun learn() {
         val additionExerciseGenerator = AdditionExerciseGenerator(max = maxValue)
         val subtractionExerciseGenerator = SubtractionExerciseGenerator(max = maxValue)
-        var input: String? = null
 
         do {
-            if (kotlin.random.Random.nextBoolean()) {
-                val additionExercise = additionExerciseGenerator.createExercise()
-                println("Was ist das Ergebnis von: ${additionExercise.summandA} + ${additionExercise.summandB}")
+            val exerciseGenerator: ExerciseGenerator =
+                selectExerciseGenerator(additionExerciseGenerator, subtractionExerciseGenerator)
 
-                input = readlnOrNull()
-                val intValue = input?.toIntOrNull()
+            val exercise = exerciseGenerator.createExercise()
+            println("[${getTitle(score)}] Was ist das Ergebnis von: ${exercise.argument1} ${exercise.operator} ${exercise.argument2}")
 
-                if (intValue != null) {
-                    if (additionExercise.result == intValue.toInt()) {
-                        println("RICHTIG!!!")
-                    } else {
-                        println("Leider falsch. Das richtige Ergebnis ist: ${additionExercise.result}")
-                    }
-                    println()
-                }
-            } else {
-                val subtractionExercise = subtractionExerciseGenerator.createExercise()
-                println("Was ist das Ergebnis von: ${subtractionExercise.minuend} - ${subtractionExercise.subtrahend}")
-
-                input = readlnOrNull()
-                val intValue = input?.toIntOrNull()
-
-                if (intValue != null) {
-                    if (subtractionExercise.result == intValue.toInt()) {
-                        println("RICHTIG!!!")
-                    } else {
-                        println("Leider falsch. Das richtige Ergebnis ist: ${subtractionExercise.result}")
-                    }
-                    println()
-                }
-            }
+            val input = readlnOrNull()
+            validateResult(input, exercise)
 
         } while (input != "x")
     }
 
+    private fun selectExerciseGenerator(
+        additionExerciseGenerator: AdditionExerciseGenerator,
+        subtractionExerciseGenerator: SubtractionExerciseGenerator
+    ) = if (Random.nextBoolean()) {
+        additionExerciseGenerator
+    } else {
+        subtractionExerciseGenerator
+    }
 
+    private fun validateResult(input: String?, exercise: Exercise) {
+        val intValue = input?.toIntOrNull()
+        if (intValue != null) {
+            if (exercise.result == intValue.toInt()) {
+                println("RICHTIG!!!")
+                score++
+                if (score % 3 == 0) {
+                    println("*** Herzlichen Glückwunsch zu deinem neuen Titel: ${getTitle(score)} ***")
+                }
+            } else {
+                println("Leider falsch. Das richtige Ergebnis ist: ${exercise.result}")
+            }
+            println()
+        }
+    }
+
+    fun getTitle(score: Int): String {
+        val index = min(score / 3, TITLES.size - 1)
+        return TITLES[index]
+    }
+
+
+    companion object {
+        val TITLES = listOf(
+            "Kindergartenkind",
+            "Vorschüler",
+            "Erstklässler",
+            "Zweitklässler",
+            "Drittklässler",
+            "Viertklässler",
+            "Hauptschüler",
+            "Realschüler",
+            "Gymnasiast",
+            "Abiturient",
+            "Student",
+            "Lehrer",
+            "Doktor",
+            "Professor",
+        )
+    }
 }

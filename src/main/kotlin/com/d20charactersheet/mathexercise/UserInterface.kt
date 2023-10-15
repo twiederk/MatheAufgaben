@@ -12,5 +12,6 @@ class UserInterface {
     
     """.trimIndent()
 
+    @Suppress("SameReturnValue")
     fun createEnd(): String = "Program beendet."
 }

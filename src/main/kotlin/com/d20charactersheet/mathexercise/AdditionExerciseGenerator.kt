@@ -5,18 +5,19 @@ import kotlin.random.Random
 class AdditionExerciseGenerator(
     private val random: Random = Random,
     private val max: Int = 1000
-) {
-    fun createExercise(): AdditionExercise {
+) : ExerciseGenerator {
+
+    override fun createExercise(): Exercise {
         val summandA = random.nextInt(max)
         val summandB = random.nextInt(max - summandA)
-        return AdditionExercise(summandA, summandB)
+        val result = summandA + summandB
+        return Exercise(
+            argument1 = summandA,
+            argument2 = summandB,
+            operator = "+",
+            result = result
+        )
     }
 
 }
 
-class AdditionExercise(
-    val summandA: Int,
-    val summandB: Int
-) {
-    val result = summandA + summandB
-}

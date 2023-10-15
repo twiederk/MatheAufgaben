@@ -13,9 +13,10 @@ class AdditionExercisesGeneratorTest {
         val additionExerciseGenerator = AdditionExerciseGenerator(Random(1)).createExercise()
 
         // assert
-        assertThat(additionExerciseGenerator.summandA).isEqualTo(965)
-        assertThat(additionExerciseGenerator.summandB).isEqualTo(21)
+        assertThat(additionExerciseGenerator.argument1).isEqualTo(965)
+        assertThat(additionExerciseGenerator.argument2).isEqualTo(21)
         assertThat(additionExerciseGenerator.result).isEqualTo(986)
-
     }
+
+
 }
