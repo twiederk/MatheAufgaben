@@ -6,7 +6,7 @@
 
     <artifactId>MatheAufgaben</artifactId>
     <groupId>com.d20charactersheet.mathexercise</groupId>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1</version>
     <packaging>jar</packaging>
 
     <name>Mathe Aufgaben</name>
